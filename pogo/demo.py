@@ -248,7 +248,7 @@ def massRename(session):
 		for monster in refinedParty:
 			index = index + 1
 			session.nicknamePokemon(monster[6],str(monster[0])+ ' '+str(monster[5]) + '%' )
-			logging.info('Renamed ' + monster[0] + ' to ' + str(monster[5]) + '-' + str(monster[2]) + '/' + str(monster[3]) + '/' + str(monster[4]))
+			logging.info('Renamed ' + monster[0] + ' to ' + str(monster[0]) + ' ' + str(monster[5]) + '%')
 			t = random.uniform(4.0, 8.0)
 			if index == outlier:
 				t = t * 2
