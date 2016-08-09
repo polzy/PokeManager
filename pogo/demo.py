@@ -250,7 +250,7 @@ def massRename(session):
 		logging.info('\nNo Pokemon to be renamed')
 		mainMenu(session)
 	
-	logging.info('\nThis will rename %s Pokemon .',len(refinedParty))
+	logging.info('\nThis will rename %s Pokemon.',len(refinedParty))
 	okayToProceed = raw_input('Do you want to rename these Pokemon? (y/n): ').lower()
 	
 	# Rename the pokemon! Use randomness to reduce chance of bot detection
@@ -259,8 +259,8 @@ def massRename(session):
 	if okayToProceed == 'y':
 		for monster in refinedParty:
 			index = index + 1
-			session.nicknamePokemon(monster[6],str(monster[0])+ ' '+str(monster[5]) + '%' )
-			logging.info('Renamed ' + monster[0] + ' to ' + str(monster[0]) + ' ' + str(monster[5]) + '%')
+			session.nicknamePokemon(monster[6],str(monster[0]) + ' ' + str(monster[5]))
+			logging.info('Renamed ' + monster[0] + ' to ' + (monster[0]) + ' ' + str(monster[5]))
 			t = random.uniform(4.0, 8.0)
 			if index == outlier:
 				t = t * 2
