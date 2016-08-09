@@ -250,7 +250,7 @@ def massRename(session):
 		logging.info('\nNo Pokemon to be renamed')
 		mainMenu(session)
 	
-	logging.info('\nThis will rename %s Pokemon.',len(refinedParty))
+	logging.info('\nThis will rename %s Pokemon .',len(refinedParty))
 	okayToProceed = raw_input('Do you want to rename these Pokemon? (y/n): ').lower()
 	
 	# Rename the pokemon! Use randomness to reduce chance of bot detection
