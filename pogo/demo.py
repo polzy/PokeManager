@@ -144,12 +144,20 @@ def massRemoveNonUnique(session):
 	party = session.checkInventory().party
 	pokemon_party = {}
 
-	iv_minimum = int(raw_input('\nWhat is your IV cut off? (Pokemon above this will be safe from transfer): '))
+	iv_max_trade = int(raw_input('\nWhat is your IV cut off? (Pokemon above this will be safe from transfer): '))
+	cp_max_trade = int(raw_input('What is your CP cut off? (Pokemon above this will be safe from transfer): '))
+
+	rf = open(os.path.dirname(__file__) + '/../exceptions.config')
+	except_pokemon = rf.read().splitlines()
+	rf.close()
 
 	# Build the party into a dictionary
 	for p in party:
 		iv_percent = ((p.individual_attack + p.individual_defense + p.individual_stamina) * 100) / 45
 		pokemon_name = pokedex[p.pokemon_id]
+		if pokemon_name in except_pokemon:
+			continue
+
 		if pokemon_name not in pokemon_party:
 			pokemon_party[pokemon_name] = []
 
@@ -171,10 +179,11 @@ def massRemoveNonUnique(session):
 		for index, (iv_percent, pokemon) in enumerate(pokemons):
 			if index == 0 or pokemon.favorite:
 				continue
-
-			if iv_percent >= iv_minimum:
+			if iv_percent >= iv_max_trade:
 				continue
-
+			if pokemon.cp >= cp_max_trade:
+				continue
+			
 			trade_pokemon.append(pokemon)
 			color = 37
 			if iv_percent > 74:
@@ -211,7 +220,6 @@ def massRemoveNonUnique(session):
 
 	mainMenu(session)
 
-
 def massRename(session):
 	party = session.checkInventory().party
 	myParty = []
@@ -238,6 +246,10 @@ def massRename(session):
 			refinedParty.append(monster)
 	
 	# Show how many it will rename and if they want to continue
+	if len(refinedParty) == 0:
+		logging.info('\nNo Pokemon to be renamed')
+		mainMenu(session)
+	
 	logging.info('\nThis will rename %s Pokemon.',len(refinedParty))
 	okayToProceed = raw_input('Do you want to rename these Pokemon? (y/n): ').lower()
 	
